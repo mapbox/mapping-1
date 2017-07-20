@@ -4,7 +4,7 @@
 
 Resistbot users are sending ~300K messages/day and many users have requested transparency around local statistics related to usage. 
 
-Questions users have : 
+Questions users have asked: 
 
 - How many people have sent emails/faxes in my [state, county]? 
 - What’s the bounce rate for my reps? 
