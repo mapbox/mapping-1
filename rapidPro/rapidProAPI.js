@@ -42,6 +42,8 @@ RapidProAPIClient.prototype.pullRPdata = function(callback) {
       var results = responseData.results;
       for (var i = 0; i < results.length; i++) {
         var result = results[i]
+        var faxes = result.fields.total_faxes_sent
+        var emails = result.fields.total_emails_sent
 
         var user = {
           'uuid': result.uuid,
@@ -50,7 +52,9 @@ RapidProAPIClient.prototype.pullRPdata = function(callback) {
           'zip': result.fields.zip,
           'rep': result.fields.representative,
           'sen_jr': result.fields.senator_junior,
-          'sen_sr': result.fields.senator_senior
+          'sen_sr': result.fields.senator_senior,
+          'total_faxes':faxes, 
+          'total_emails':emails
         };
 
         var userData = new userResult(user);
@@ -71,12 +75,11 @@ RapidProAPIClient.prototype.pullRPdata = function(callback) {
 };
 
 function seedDB(callback) {
-  // look up actual syntax 
   userResult.find({}, function(err, results) {
     if (err) return callback(err)
 
-    // if there's no data, run this script! 
-    if (results) {
+    // if there's data, run this script! 
+    if (results.length === null) {
       mongoose.connection.db.dropCollection('userresults', function(err, result) {
         if (err) return callback(err);
         console.log(result)
@@ -87,7 +90,6 @@ function seedDB(callback) {
       if (err) return callback(err);
       console.log('DB seeded!')
     })
-
   });
 
 }
